@@ -20,14 +20,14 @@ class ProfCoursTest extends TestCase
 
     public static $conn = null;
     // Prof
-    private $prenom ="REVERGIE";
-    private $nom ="TATSUM";
-    private $date ="22/07/1984";
-    private $lieu ="Toulouse, France";
+    private $prenom ="REVERGIE"; // a changer
+    private $nom ="TATSUM"; // a changer
+    private $date ="22/07/1984"; // a changer
+    private $lieu ="Toulouse, France"; // a changer
 
     // cours
-    private $intitule="Intégration continue";
-    private $duree="3h";
+    private $intitule="Intégratoin continue"; //a remplir
+    private $duree="3h";    //a remplir
 
     private static $prof_a = [];
     private static $cours_a = [];
@@ -71,7 +71,9 @@ class ProfCoursTest extends TestCase
              *
              */
 
-
+            new Prof("Nom_prof1", "Prenom_prof1", "10/01/1982", "lieu_prof1"),      // idprof = 1
+            new Prof("Nom_prof2", "Prenom_prof2", "10/02/1982", "lieu_prof2"),      // idprof = 2
+            new Prof("Nom_prof3", "Prenom_prof3", "10/03/1982", "lieu_prof3"),      // idprof = 3
             new Prof("Nom_prof4", "Prenom_prof4", "10/04/1982", "lieu_prof4"),      // idprof = 4
             new Prof("Nom_prof5", "Prenom_prof5", "10/05/1982", "lieu_prof5"),      // idprof = 5
             new Prof("Nom_prof6", "Prenom_prof6", "10/06/1982", "lieu_prof6"),      // idprof = 6
@@ -88,7 +90,9 @@ class ProfCoursTest extends TestCase
             new Cours("Cours4", "2", 3),       // idcours = 4
             new Cours("Cours5", "3", 3),       // idcours = 5
             new Cours("Cours6", "2", 4),       // idcours = 6
-
+            new Cours("Cours7", "3", 5),       // idcours = 7   ** A SUPPRIMER **
+            new Cours("Cours8", "4", 5),       // idcours = 8
+            new Cours("Cours9", "3", 5),        // idcours = 9   ** A MODIFIER **
 
             /**
              *
@@ -170,8 +174,16 @@ class ProfCoursTest extends TestCase
         $this->assertCount($num_records, self::$prof_a, "Enregistrement des profs ...\n");
 
 
-        // Cours
 
+        // Cours
+        print "ADD cours \n";
+        foreach (self::$cours_a as $cours) {
+            $cours->add($conn);
+        }
+        $expected = count(self::$cours_a);
+        $num_records = Cours::count($conn);
+        $this->assertEquals($expected, $num_records, "Enregistrement des cours ...\n");
+        $this->assertCount($num_records, self::$cours_a, "Enregistrement des cours ...\n");
 
         /**
          *
@@ -195,14 +207,20 @@ class ProfCoursTest extends TestCase
         // Prof
         $record_prof_a = Prof::printAll($conn);
         print "########## - LISTE DES PROFS - AVANT TOUT ########## \n";
-        foreach ( $record_prof_a as $record_prof ) {
+        foreach ($record_prof_a as $record_prof) {
             print $record_prof;
         }
         print "################################################################\n\n";
-        $this->assertCount(count(Self::$prof_a), $record_prof_a, "Nombre d'enregistrement égale pour Prof\n");
-
+        $this->assertCount(count(self::$prof_a), $record_prof_a, "Nombre d'enregistrement égale pour Prof\n");
 
         // Cours
+        $record_cours_a = Cours::printAll($conn);
+        print "########## - LISTE DES COURS - AVANT TOUT ########## \n";
+        foreach ($record_cours_a as $record_cours) {
+            print $record_cours;
+        }
+        print "################################################################\n\n";
+        $this->assertCount(count(self::$cours_a), $record_cours_a, "Nombre d'enregistrement égale pour Cours\n");
 
         /**
          *
@@ -210,8 +228,6 @@ class ProfCoursTest extends TestCase
          * s’inspirer de test de la sélection et affichage des profs pour tester la sélection et l’affichage des cours.
          *
          */
-
-
     }
 
 
@@ -254,10 +270,17 @@ class ProfCoursTest extends TestCase
         $this->assertEquals($expected, $prof_str, "Prof \n");
 
         // Cours
+        $cours = Cours::printOne($conn);
+        $cours_str = $cours->__toString();
+        print "########## - 1er COURS EN BASE - ########## \n";
+        print $cours_str."\n";
+        print "################################################################\n\n";
+        $expected = self::$cours_a[0]->__toString();
+        $this->assertEquals($expected, $cours_str, "Cours \n");
 
         /**
          *
-         * Question 10 :	Dans la fonction « testPrintOne() »,
+         * Question 10 : Dans la fonction « testPrintOne() »,
          * s’inspirer de test de sélection et affichage du premier prof pour tester la sélection et l’affichage du premier cours dans la base.
          *
          */
@@ -312,14 +335,32 @@ class ProfCoursTest extends TestCase
         $this->assertTrue($val, "Update du prof num $idProf ...\n");
 
         // Cours
+        $cours = new Cours($this->intitule, $this->duree, $idProf);
+        $val = $cours->updateOne($conn, $idCours);
+        $expected_cours_str = $cours->__toString();
+        $record_cours = Cours::printOne($conn, $idCours);
+        $this->assertEquals($expected_cours_str, $record_cours->__toString(), "Update du cours $idCours ...\n");
+        $this->assertTrue($val, "Update du cours num $idCours ...\n");
+
+        // Affichage après mise à jour
+        print "########## - LISTE DES PROFS - APRES UPDATE DU PROF NUM $idProf ########## \n";
+        foreach (Prof::printAll($conn) as $record_prof) {
+            print $record_prof;
+        }
+        print "################################################################\n\n";
+
+        print "@@@@@@@@@@@@@ - LISTE DES COURS - APRES UPDATE DU COURS NUM $idCours @@@@@@@@@@@@@ \n";
+        foreach (Cours::printAll($conn) as $record_cours) {
+            print $record_cours;
+        }
+        print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n";
 
         /**
          *
-         * Question 11 :	Dans la fonction « testUpdateOne() »,
+         * Question 11 : Dans la fonction « testUpdateOne() »,
          * s’inspirer de test de la modification du prof avec idProf= 10 pour tester la modification du cours dans ayant comme idCours = 9.
          *
          */
-
 
 
         // Prof
@@ -401,40 +442,52 @@ class ProfCoursTest extends TestCase
         print "################################################################\n\n";
 
         // Cours
-        /**
-         *
-         * Question 12 :	Dans la fonction « testDeleteOne() »,
-         * s’inspirer de test de la suppression du prof avec idProf= 8 pour tester la modification du cours dans ayant comme idCours = 7.
-         *
-         */
+        $val = Cours::deleteOne($conn, $idCours);
+        $this->assertTrue($val, "Cours num $idCours supprimer avec succès\n");
+        $record_cours_a = Cours::printAll($conn);
+        print "@@@@@@@@@@@@@ - LISTE DES COURS APRES SUPPRESSION - Vérifiez le cours num $idCours @@@@@@@@@@@@@ \n";
+        foreach( $record_cours_a as $record_cours) {
+            print $record_cours;
+        }
+        print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n";
     }
 
-
+    /**
+     *Question 12 : Dans la fonction « testDeleteOne() »,s’inspirer de test de la suppression du prof avec idProf= 8 pour tester la modification du cours dans ayant comme idCours = 7.
+     */
     public function testDeleteOne_2()
     {
         print __METHOD__."\n";
         $conn = $this->getConnection();
 
-        // Suppression sans id à supprimer ==> la suppression conccernera le premier enregistrement de la table.
+        // Suppression sans ID : la suppression concernera le premier enregistrement de la table.
+
         // Prof
         $val = Prof::deleteOne($conn);
-        $this->assertTrue($val,  "Premier Prof supprimé avec SUCCES\n");
+        $this->assertTrue($val, "Premier Prof supprimé avec SUCCES\n");
         $record_prof_a = Prof::printAll($conn);
-        print "########## - LISTE DES PROFS APRES SUPPRESSION- Vérifier avec celui juste avant (1e supprimer) ########## \n";
-        foreach ( $record_prof_a as $record_prof ) {
+        print "########## - LISTE DES PROFS APRES SUPPRESSION - Vérifier avec celui juste avant (1er supprimé) ########## \n";
+        foreach ($record_prof_a as $record_prof) {
             print $record_prof;
         }
         print "################################################################\n\n";
 
         // Cours
+        $val = Cours::deleteOne($conn);
+        $this->assertTrue($val, "Premier Cours supprimé avec SUCCES\n");
+        $record_cours_a = Cours::printAll($conn);
+        print "@@@@@@@@@@@@@ - LISTE DES COURS APRES SUPPRESSION - Vérifier avec celui juste avant (1er supprimé) @@@@@@@@@@@@@ \n";
+        foreach ($record_cours_a as $record_cours) {
+            print $record_cours;
+        }
+        print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n";
+
         /**
          *
-         * Question 13 :	Dans la fonction « testDeleteOne_2() »,
-         * s’inspirer de test de la suppression du premier prof pour tester la suppression du premier cours.
+         * Question 12 : Dans la fonction « testDeleteOne() »,
+         * s’inspirer de test de la suppression du prof avec idProf= 8 pour tester la modification du cours dans ayant comme idCours = 7.
          *
          */
-
-
     }
 
 }
