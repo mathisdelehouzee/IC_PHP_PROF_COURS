@@ -171,7 +171,7 @@ class ProfCoursTest extends TestCase
         $this->assertEquals($expected, $num_records, "Enregistrement des profs ...\n");
         $this->assertCount($num_records, self::$prof_a, "Enregistrement des profs ...\n");
 
-        *
+        /*
         * Question 8 : Dans la fonction « testAdd() », s’inspirer de test d’ajout des profs pour tester l’ajout des cours.   
         *
         */
