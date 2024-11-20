@@ -65,6 +65,8 @@ class ProfCoursTest extends TestCase
         // Initialisation des données pour les tests
         self::$prof_a = [
             // Question 6 : Insérer les enregistrements suivants dans la table prof
+            new Prof("Nom_prof1", "Prenom_prof1", "10/07/1988", "lieu_prof1"),
+            new Prof("Nom_prof2", "Prenom_prof2", "05/06/1998", "lieu_prof2"),
             new Prof("Nom_prof3", "Prenom_prof3", "10/03/1982", "lieu_prof3"),
             new Prof("Nom_prof4", "Prenom_prof4", "10/04/1982", "lieu_prof4"),
             new Prof("Nom_prof5", "Prenom_prof5", "10/05/1982", "lieu_prof5"),
