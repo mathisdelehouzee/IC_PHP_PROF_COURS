@@ -18,12 +18,12 @@ class ProfCoursTest extends TestCase
     public static $conn = null;
 
     // Attributs pour les tests
-    private $prenom = "REVERGIE"; // a changer
-    private $nom = "TATSUM"; // a changer
-    private $date = "22/07/1984"; // a changer
-    private $lieu = "Toulouse, France"; // a changer
-    private $intitule = "Intégration continue"; //a remplir
-    private $duree = "3h"; //a remplir
+    private $prenom = "REVERGIE"; // à changer
+    private $nom = "TATSUM"; // à changer
+    private $date = "22/07/1984"; // à changer
+    private $lieu = "Toulouse, France"; // à changer
+    private $intitule = "Intégration continue"; // à remplir
+    private $duree = "3h"; // à remplir
 
     private static $prof_a = [];
     private static $cours_a = [];
@@ -72,7 +72,7 @@ class ProfCoursTest extends TestCase
             new Prof("Nom_prof7", "Prenom_prof7", "10/07/1982", "lieu_prof7"),
             new Prof("Nom_prof8", "Prenom_prof8", "10/08/1982", "lieu_prof8"),
             new Prof("Nom_prof9", "Prenom_prof9", "10/09/1982", "lieu_prof9"),
-            new Prof("Nom_prof10", "Prenom_prof10", "10/10/1982", "lieu_prof10") // ** A MODIFIER **
+            new Prof("Nom_prof10", "Prenom_prof10", "10/10/1982", "lieu_prof10") // ** À MODIFIER **
         ];
 
         self::$cours_a = [
@@ -82,10 +82,21 @@ class ProfCoursTest extends TestCase
             new Cours("Cours4", "2", 3),
             new Cours("Cours5", "3", 3),
             new Cours("Cours6", "2", 4),
-            new Cours("Cours7", "3", 5), // ** A SUPPRIMER **
+            new Cours("Cours7", "3", 5), // ** À SUPPRIMER **
             new Cours("Cours8", "4", 5),
-            new Cours("Cours9", "3", 5) // ** A MODIFIER **
+            new Cours("Cours9", "3", 5) // ** À MODIFIER **
         ];
+
+        // Insertion des données dans la base
+        foreach (self::$prof_a as $prof) {
+            $prof->add(self::$conn);
+        }
+
+        foreach (self::$cours_a as $cours) {
+            $cours->add(self::$conn);
+        }
+
+        echo "Données insérées dans les tables `prof` et `cours`.\n";
     }
 
     /**
@@ -126,28 +137,20 @@ class ProfCoursTest extends TestCase
         $prof = Prof::printOne($conn);
         if ($prof !== null) {
             $prof_str = $prof->__toString();
-            print "########## - PREMIER PROF EN BASE - ########## \n";
-            print $prof_str . "\n";
-            print "###############################################\n\n";
-
             $expected = self::$prof_a[0]->__toString();
             $this->assertEquals($expected, $prof_str, "Affichage du premier professeur");
         } else {
-            print "Aucun professeur trouvé.\n";
+            $this->assertNull($prof, "Aucun professeur trouvé.");
         }
 
         // Cours
         $cours = Cours::printOne($conn);
         if ($cours !== null) {
             $cours_str = $cours->__toString();
-            print "########## - PREMIER COURS EN BASE - ########## \n";
-            print $cours_str . "\n";
-            print "###############################################\n\n";
-
             $expected = self::$cours_a[0]->__toString();
             $this->assertEquals($expected, $cours_str, "Affichage du premier cours");
         } else {
-            print "Aucun cours trouvé.\n";
+            $this->assertNull($cours, "Aucun cours trouvé.");
         }
     }
 
@@ -159,24 +162,36 @@ class ProfCoursTest extends TestCase
         print __METHOD__ . "\n";
         $conn = $this->getConnection();
 
-        // Prof
+        // Vérifiez si le professeur avec ID 10 existe avant de le mettre à jour
+        $existing_prof = Prof::printOne($conn, 10);
+        if ($existing_prof === null) {
+            $this->fail("Le professeur avec ID 10 est introuvable avant la mise à jour.");
+        }
+
+        // Mise à jour du professeur
         $prof = new Prof($this->nom, $this->prenom, $this->date, $this->lieu);
         $val = $prof->updateOne($conn, 10);
-        $this->assertTrue($val, "Mise à jour du professeur");
+        $this->assertTrue($val, "Mise à jour du professeur avec succès");
 
+        // Validation de la mise à jour
         $updated_prof = Prof::printOne($conn, 10);
         if ($updated_prof !== null) {
             $this->assertEquals($prof->__toString(), $updated_prof->__toString(), "Validation de la mise à jour du professeur");
+        } else {
+            $this->fail("Le professeur avec ID 10 est introuvable après la mise à jour.");
         }
 
-        // Cours
+        // Mise à jour du cours
         $cours = new Cours($this->intitule, $this->duree, 10);
         $val = $cours->updateOne($conn, 9);
-        $this->assertTrue($val, "Mise à jour du cours");
+        $this->assertTrue($val, "Mise à jour du cours avec succès");
 
+        // Validation de la mise à jour
         $updated_cours = Cours::printOne($conn, 9);
         if ($updated_cours !== null) {
             $this->assertEquals($cours->__toString(), $updated_cours->__toString(), "Validation de la mise à jour du cours");
+        } else {
+            $this->fail("Le cours avec ID 9 est introuvable après la mise à jour.");
         }
     }
 }
