@@ -27,7 +27,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https:////github.com/mathisdelehouzee/dbunit.git"
+            "url": "https://github.com/mathisdelehouzee/dbunit.git"
 
         }
     ]
