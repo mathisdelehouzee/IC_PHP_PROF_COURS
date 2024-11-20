@@ -65,7 +65,7 @@ class ProfCoursTest extends TestCase
         self::$prof_a = [
             
             
-            /**
+            /*
             *
             * Question 6 : Insérer les enregistrements demandés dans la table prof (prof1,2 et 3)
             *
@@ -92,7 +92,7 @@ class ProfCoursTest extends TestCase
             new Cours("Cours8", "4", 5),       // idcours = 8
             new Cours("Cours9", "3", 5),        // idcours = 9
             
-            /**
+            /*
             *
             * Question 7 : Insérer les enregistrements demandés dans la table cours
             *
@@ -120,7 +120,7 @@ class ProfCoursTest extends TestCase
     }
     
     
-    /**
+    /*
      * Returns the test database connection.
      *
      * @return \PDO
@@ -150,7 +150,7 @@ class ProfCoursTest extends TestCase
     }
     
     
-    /**
+    /*
      * Respect this order
      * 1. Add Prof
      * 2. Add Cours
@@ -180,7 +180,7 @@ class ProfCoursTest extends TestCase
     }
     
     
-    /**
+    /*
      * Nous compterons le nombre d'enregistrement que nous comparons au nombre d'éléments du tableau.
      * REQUIRE: Assurez vous qu'aucune suppression n'a été faite.
      * @order 2
@@ -201,8 +201,7 @@ class ProfCoursTest extends TestCase
 
         
         // Cours
-
-        *
+/*
         * Question 9 : Dans la fonction « testPrintAll() », 
         * s’inspirer de test de la sélection et affichage des profs pour tester la sélection et l’affichage des cours.   
         *
@@ -212,7 +211,7 @@ class ProfCoursTest extends TestCase
     }
     
     
-    /**
+    /*
      * Liste des cours et leur Prof
      * => Cours...
      *      =W prof ...
@@ -232,7 +231,7 @@ class ProfCoursTest extends TestCase
     }
     
     
-    /**
+    /*
      * Affichage d'un enregistrement
      * @order 4
      */
@@ -252,7 +251,7 @@ class ProfCoursTest extends TestCase
 
         // Cours
         
-        /**
+        /*
         *
         * Question 10 :	Dans la fonction « testPrintOne() », 
         * s’inspirer de test de sélection et affichage du premier prof pour tester la sélection et l’affichage du premier cours dans la base.
@@ -285,7 +284,7 @@ class ProfCoursTest extends TestCase
     }
     
     
-    /**
+    /*
      * Mise à jour des enregistrements
      * 1. UPDATE prof num 10
      * 2. UPDATE cours num 9
@@ -310,7 +309,7 @@ class ProfCoursTest extends TestCase
 
         // Cours
         
-        /**
+        /*
         *
         * Question 11 :	Dans la fonction « testUpdateOne() », 
         * s’inspirer de test de la modification du prof avec idProf= 10 pour tester la modification du cours dans ayant comme idCours = 9.
@@ -337,9 +336,7 @@ class ProfCoursTest extends TestCase
         print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n";
     }
 
-    /**
-     *
-     */
+
     public function testUpdateOne_2()
     {
         print __METHOD__."\n";
@@ -374,7 +371,7 @@ class ProfCoursTest extends TestCase
         print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n";
     }
 
-    /**
+    /*
      * Suppression d'un enregistrement.
      * @order 6
      */
@@ -408,9 +405,7 @@ class ProfCoursTest extends TestCase
         print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n";
     }
 
-    /**
-     *
-     */
+
     public function testDeleteOne_2()
     {
         print __METHOD__."\n";
@@ -429,7 +424,7 @@ class ProfCoursTest extends TestCase
 
         // Cours
         
-        /**
+        /*
         *
         * Question 12 :	Dans la fonction « testDeleteOne() », 
         * s’inspirer de test de la suppression du prof avec idProf= 8 pour tester la modification du cours dans ayant comme idCours = 7.
