@@ -20,14 +20,14 @@ class ProfCoursTest extends TestCase
 
     public static $conn = null;
     // Prof
-    private $prenom ="REVERGIE"; // a changer
-    private $nom ="TATSUM"; // a changer
-    private $date ="22/07/1984"; // a changer
-    private $lieu ="Toulouse, France"; // a changer
+    private $prenom ="REVERGIE";
+    private $nom ="TATSUM";
+    private $date ="22/07/1984";
+    private $lieu ="Toulouse, France";
 
     // cours
-    private $intitule="Intégratoin continue"; //a remplir
-    private $duree="3h";    //a remplir
+    private $intitule="Intégration continue";
+    private $duree="3h";
 
     private static $prof_a = [];
     private static $cours_a = [];
@@ -71,9 +71,7 @@ class ProfCoursTest extends TestCase
              *
              */
 
-            new Prof("Nom_prof1", "Prenom_prof1", "10/01/1982", "lieu_prof1"),      // idprof = 1
-            new Prof("Nom_prof2", "Prenom_prof2", "10/02/1982", "lieu_prof2"),      // idprof = 2
-            new Prof("Nom_prof3", "Prenom_prof3", "10/03/1982", "lieu_prof3"),      // idprof = 3
+
             new Prof("Nom_prof4", "Prenom_prof4", "10/04/1982", "lieu_prof4"),      // idprof = 4
             new Prof("Nom_prof5", "Prenom_prof5", "10/05/1982", "lieu_prof5"),      // idprof = 5
             new Prof("Nom_prof6", "Prenom_prof6", "10/06/1982", "lieu_prof6"),      // idprof = 6
@@ -90,9 +88,7 @@ class ProfCoursTest extends TestCase
             new Cours("Cours4", "2", 3),       // idcours = 4
             new Cours("Cours5", "3", 3),       // idcours = 5
             new Cours("Cours6", "2", 4),       // idcours = 6
-            new Cours("Cours7", "3", 5),       // idcours = 7   ** A SUPPRIMER **
-            new Cours("Cours8", "4", 5),       // idcours = 8
-            new Cours("Cours9", "3", 5),        // idcours = 9   ** A MODIFIER **
+
 
             /**
              *
@@ -176,10 +172,6 @@ class ProfCoursTest extends TestCase
 
         // Cours
 
-        print "ADD cours\n";
-        foreach (self::$cours_a as $cours) {
-            $cours->add($conn);
-        }
 
         /**
          *
@@ -409,19 +401,15 @@ class ProfCoursTest extends TestCase
         print "################################################################\n\n";
 
         // Cours
-        $val = Cours::deleteOne($conn, $idCours);
-        $this->assertTrue($val, "Cours num $idCours supprimer avec succès\n");
-        $record_cours_a = Cours::printAll($conn);
-        print "@@@@@@@@@@@@@ - LISTE DES COURS APRES SUPPRESSION - Vérifiez le cours num $idCours @@@@@@@@@@@@@ \n";
-        foreach( $record_cours_a as $record_cours) {
-            print $record_cours;
-        }
-        print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n";
+        /**
+         *
+         * Question 12 :	Dans la fonction « testDeleteOne() »,
+         * s’inspirer de test de la suppression du prof avec idProf= 8 pour tester la modification du cours dans ayant comme idCours = 7.
+         *
+         */
     }
 
-    /**
-     *
-     */
+
     public function testDeleteOne_2()
     {
         print __METHOD__."\n";
@@ -439,13 +427,13 @@ class ProfCoursTest extends TestCase
         print "################################################################\n\n";
 
         // Cours
-
         /**
          *
-         * Question 12 :	Dans la fonction « testDeleteOne() »,
-         * s’inspirer de test de la suppression du prof avec idProf= 8 pour tester la modification du cours dans ayant comme idCours = 7.
+         * Question 13 :	Dans la fonction « testDeleteOne_2() »,
+         * s’inspirer de test de la suppression du premier prof pour tester la suppression du premier cours.
          *
          */
+
 
     }
 
