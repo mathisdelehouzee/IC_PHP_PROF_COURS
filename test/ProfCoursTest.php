@@ -20,10 +20,10 @@ class ProfCoursTest extends TestCase
 
     public static $conn = null;
     // Prof
-    private $prenom ="REVERGIE"; // a changer
-    private $nom ="TATSUM"; // a changer
-    private $date ="22/07/1984"; // a changer
-    private $lieu ="Toulouse, France"; // a changer
+    private $prenom ="REVERGIE";
+    private $nom ="TATSUM";
+    private $date ="22/07/1984";
+    private $lieu ="Toulouse, France";
 
     // cours
     private $intitule="Intégratoin continue"; //a remplir
@@ -67,20 +67,18 @@ class ProfCoursTest extends TestCase
             
             /**
             *
-            * Question 6 : Insérer les enregistrements suivantes dans la table prof 
+            * Question 6 : Insérer les enregistrements demandés dans la table prof (prof1,2 et 3)
             *
             */
             
-            new Prof("Nom_prof1", "Prenom_prof1", "10/01/1982", "lieu_prof1"),      // idprof = 1
-            new Prof("Nom_prof2", "Prenom_prof2", "10/02/1982", "lieu_prof2"),      // idprof = 2
-            new Prof("Nom_prof3", "Prenom_prof3", "10/03/1982", "lieu_prof3"),      // idprof = 3
+
             new Prof("Nom_prof4", "Prenom_prof4", "10/04/1982", "lieu_prof4"),      // idprof = 4
             new Prof("Nom_prof5", "Prenom_prof5", "10/05/1982", "lieu_prof5"),      // idprof = 5
             new Prof("Nom_prof6", "Prenom_prof6", "10/06/1982", "lieu_prof6"),      // idprof = 6
             new Prof("Nom_prof7", "Prenom_prof7", "10/07/1982", "lieu_prof7"),      // idprof = 7
-            new Prof("Nom_prof8", "Prenom_prof8", "10/08/1982", "lieu_prof8"),      // idprof = 8       ** A SUPPRIMER **
+            new Prof("Nom_prof8", "Prenom_prof8", "10/08/1982", "lieu_prof8"),      // idprof = 8
             new Prof("Nom_prof9", "Prenom_prof9", "10/09/1982", "lieu_prof9"),      // idprof = 9
-            new Prof("Nom_prof10", "Prenom_prof10", "10/10/1982", "lieu_prof10")    // idprof = 10      ** A MODIFIER **
+            new Prof("Nom_prof10", "Prenom_prof10", "10/10/1982", "lieu_prof10")    // idprof = 10
         ];
 
         self::$cours_a = [
@@ -90,13 +88,13 @@ class ProfCoursTest extends TestCase
             new Cours("Cours4", "2", 3),       // idcours = 4
             new Cours("Cours5", "3", 3),       // idcours = 5
             new Cours("Cours6", "2", 4),       // idcours = 6
-            new Cours("Cours7", "3", 5),       // idcours = 7   ** A SUPPRIMER **
+            new Cours("Cours7", "3", 5),       // idcours = 7
             new Cours("Cours8", "4", 5),       // idcours = 8
-            new Cours("Cours9", "3", 5),        // idcours = 9   ** A MODIFIER **
+            new Cours("Cours9", "3", 5),        // idcours = 9
             
             /**
             *
-            * Question 7 : Insérer les enregistrements suivantes dans la table cours
+            * Question 7 : Insérer les enregistrements demandés dans la table cours
             *
             */
 
@@ -173,29 +171,17 @@ class ProfCoursTest extends TestCase
         $this->assertEquals($expected, $num_records, "Enregistrement des profs ...\n");
         $this->assertCount($num_records, self::$prof_a, "Enregistrement des profs ...\n");
 
-        
-        // Cours
-        
-        print "ADD cours\n";
-        foreach (self::$cours_a as $cours) {
-            $cours->add($conn);
-        }
-
-         $expected = count(self::$cours_a);
-                $num_records = Cours::count($conn);
-                $this->assertEquals($expected, $num_records, "Enregistrement des cours ...\n");
-                $this->assertCount($num_records, self::$cours_a, "Enregistrement des cours ...\n");
-        /**
         *
         * Question 8 : Dans la fonction « testAdd() », s’inspirer de test d’ajout des profs pour tester l’ajout des cours.   
         *
         */
+
         
     }
     
     
     /**
-     * Nous compterons le nobre d'enregistrement que nous comparerons au nombre d'élément du tableau.
+     * Nous compterons le nombre d'enregistrement que nous comparons au nombre d'éléments du tableau.
      * REQUIRE: Assurez vous qu'aucune suppression n'a été faite.
      * @order 2
      */
@@ -215,14 +201,7 @@ class ProfCoursTest extends TestCase
 
         
         // Cours
-         $record_cours_a = Cours::printAll($conn);
-                print "########## - LISTE DES COURS - AVANT TOUT ########## \n";
-                foreach ( $record_cours_a as $record_cours ) {
-                    print $record_cours;
-                }
-                print "################################################################\n\n";
-                $this->assertCount(count(Self::$cours_a), $record_cours_a, "Nombre d'enregistrement égale pour Cours\n");
-        /**
+
         *
         * Question 9 : Dans la fonction « testPrintAll() », 
         * s’inspirer de test de la sélection et affichage des profs pour tester la sélection et l’affichage des cours.   
